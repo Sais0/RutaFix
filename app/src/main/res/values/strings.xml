@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">RutaFix</string>
+    <string name="Mi_nombre">Santiago Babativa</string>
+    <string name="Bienvenida">Inicia una nueva aventura con Rutafix y descubre una nueva forma de ver el mundo</string>
+    <string name="Tx_InicioS">La aventura está por iniciar, por favor inicia sesión</string>
+    <string name="comienza">Comienza</string>
+    <string name="registrate">Regístrate</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="recupera_contra">Recupera Tu Contraseña</string>
+    <string name="no_tienes_cuenta">No tienes cuenta?</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+</resources>
