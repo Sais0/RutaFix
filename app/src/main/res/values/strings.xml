@@ -10,4 +10,5 @@
     <string name="no_tienes_cuenta">No tienes cuenta?</string>
     <string name="usuario">Usuario</string>
     <string name="contrasena">Contraseña</string>
+    <string name="ingresa_con_google">Ingresa con Google</string>
 </resources>
