@@ -16,6 +16,7 @@ class Splash : AppCompatActivity() {
             // Navegar a la pantalla Home
             val intent = Intent(this, Home::class.java)
             startActivity(intent)
+
             // Cerrar la pantalla Splash para que no se pueda volver atrás
             finish()
         }, 3000)
