@@ -10,15 +10,10 @@
 
     <ImageView
         android:id="@+id/iconoLogoSplash"
-        android:layout_width="241dp"
+        android:layout_width="300dp"
         android:layout_height="300dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
         tools:ignore="ImageContrastCheck" />
 
     <TextView
@@ -30,9 +25,6 @@
         android:textColor="@color/naranja_principal"
         android:textSize="48sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconoLogoSplash"
         tools:ignore="TextContrastCheck" />
 
     <TextView
