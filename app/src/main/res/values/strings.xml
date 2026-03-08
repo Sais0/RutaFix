@@ -11,4 +11,19 @@
     <string name="usuario">Usuario</string>
     <string name="contrasena">Contraseña</string>
     <string name="ingresa_con_google">Ingresa con Google</string>
+
+    //Textos para Register
+
+    <string name="volver">Volver al Login</string>
+    <string name="completa_datos">Completa tus datos para crear una cuenta.</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellido">Apellido</string>
+    <string name="telefono">Teléfono</string>
+    <string name="correo">Correo Electrónico</string>
+    <string name="confirmar_correo">Confirmar Correo</string>
+    <string name="confirmar_contrasena">Confirmar Contraseña</string>
+    <string name="registrarse_btn">Registrarse</string>
+    <string name="ya_tienes_cuenta">¿Ya tienes cuenta?</string>
+    <string name="inicia_sesion">Iniciar sesión</string>
+
 </resources>
