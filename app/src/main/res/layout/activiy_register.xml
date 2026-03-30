@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/gris_de_fondo"
     android:fillViewport="true"
-    tools:context=".ui.Register">
+    tools:context=".ui.auth.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,24 +19,27 @@
             android:id="@+id/txtVolver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="16dp"
             android:text="@string/volver"
             android:textColor="@color/naranja_principal"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="start"/>
+            tools:ignore="TextContrastCheck" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:importantForAccessibility="no"
-                android:src="@drawable/logo" />
+                android:src="@drawable/logo"
+                tools:ignore="ImageContrastCheck" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -61,6 +64,7 @@
             android:id="@+id/etNombre"
             android:layout_width="match_parent"
             android:layout_height="48dp"
+            android:autofillHints=""
             android:background="@drawable/bt_borde_naranja"
             android:hint="@string/nombre"
             android:inputType="textPersonName"

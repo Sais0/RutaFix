@@ -11,6 +11,8 @@
     <string name="usuario">Usuario</string>
     <string name="contrasena">Contraseña</string>
     <string name="ingresa_con_google">Ingresa con Google</string>
+    <string name="inicio">Inicio</string>
+
 
     //Textos para Register
 
@@ -25,5 +27,10 @@
     <string name="registrarse_btn">Registrarse</string>
     <string name="ya_tienes_cuenta">¿Ya tienes cuenta?</string>
     <string name="inicia_sesion">Iniciar sesión</string>
+
+    //Textos para Main
+    <string name="logo">Logo</string>
+    <string name="catalogo">Catálogo</string>
+    <string name="favoritos">Favoritos</string>
 
 </resources>

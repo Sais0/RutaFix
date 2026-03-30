@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taller2">
         <activity
-            android:name=".ui.Splash"
+            android:name=".ui.inicio.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Taller2">
             <intent-filter>
@@ -21,13 +21,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.Home"
+            android:name=".ui.inicio.InicioActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Login"
+            android:name=".ui.auth.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.Register"
+            android:name=".ui.auth.RegisterActivity"
             android:exported="false"/>
 
     </application>

@@ -1,12 +1,13 @@
-package com.example.taller2.ui
+package com.example.taller2.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.taller2.R
+import com.example.taller2.ui.auth.RegisterActivity
 
-class Login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -16,7 +17,7 @@ class Login : AppCompatActivity() {
 
         //Programamos el clic de "Registrate"
         txtRegistrateLogin.setOnClickListener {
-            val intent = Intent(this, Register::class.java)
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
     }
