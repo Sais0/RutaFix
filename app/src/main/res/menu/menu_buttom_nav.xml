@@ -8,4 +8,13 @@
         android:id="@+id/nav_catalogo"
         android:title="@string/catalogo"
         android:icon="@android:drawable/ic_menu_gallery"/>
+
+    <item
+        android:id="@+id/nav_carrito"
+        android:title="@string/carrito"
+        android:icon="@android:drawable/ic_menu_search"/>
+    <item
+        android:id="@+id/nav_perfil"
+        android:title="@string/perfil"
+        android:icon="@android:drawable/ic_menu_manage"/>
 </menu>

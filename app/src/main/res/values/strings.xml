@@ -32,5 +32,7 @@
     <string name="logo">Logo</string>
     <string name="catalogo">Catálogo</string>
     <string name="favoritos">Favoritos</string>
+    <string name="carrito">Carrito</string>
+    <string name="perfil">Perfil</string>
 
 </resources>
