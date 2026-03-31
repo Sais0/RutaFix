@@ -34,5 +34,6 @@
     <string name="favoritos">Favoritos</string>
     <string name="carrito">Carrito</string>
     <string name="perfil">Perfil</string>
+    <string name="precio">Precio</string>
 
 </resources>
