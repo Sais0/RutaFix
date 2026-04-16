@@ -8,11 +8,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.taller2.R
+import com.example.taller2.ui.SupabaseClient
+import io.github.jan.supabase.auth.auth
+import kotlinx.coroutines.launch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
-
-// --- IMPORTS DE TUS FRAGMENTS (Aseguran que no haya errores rojos) ---
 import com.example.taller2.ui.auth.LoginActivity
 import com.example.taller2.ui.main.productos.HomeFragment
 import com.example.taller2.ui.main.productos.CategoriasFragment
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             navView.setCheckedItem(R.id.nav_home)
         }
 
-        // --- LÓGICA DEL MENÚ INFERIOR (4 Elementos) ---
+        //LÓGICA DEL MENÚ INFERIOR
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> replaceFragment(HomeFragment())
@@ -61,23 +63,34 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // --- LÓGICA DEL MENÚ LATERAL (4 Elementos) ---
+        //LÓGICA DEL MENÚ LATERAL
         navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_favoritos -> replaceFragment(FavoritosFragment())
                 R.id.nav_admin -> replaceFragment(AdminFragment())
                 R.id.nav_usuarios -> replaceFragment(UsuariosFragment())
                 R.id.nav_salir -> {
-                    // Si le da a salir, lo devolvemos al Login
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish() // Cerramos el Main para que no pueda volver con "Atrás"
+                    lifecycleScope.launch {
+                        try {
+                            SupabaseClient.client.auth.signOut()
+
+                            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                            startActivity(intent)
+                            finish()
+                        } catch (e: Exception) {
+                            // Si falla el internet, al menos lo mandamos al Login
+                            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                            finish()
+                        }
+                    }
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
-    }
+        }
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()

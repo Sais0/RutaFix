@@ -10,12 +10,12 @@
     android:padding="32dp">
 
     <LinearLayout
-        tools:ignore="UseCompoundDrawables"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:layout_width="100dp"
@@ -128,6 +128,8 @@
         android:paddingEnd="16dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
         tools:ignore="UseCompoundDrawables">
 
         <ImageView

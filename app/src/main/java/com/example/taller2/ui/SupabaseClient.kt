@@ -5,16 +5,6 @@ import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.postgrest.Postgrest
 import kotlinx.serialization.Serializable
 
-object SupabaseClient {
-    val client = createSupabaseClient(
-        supabaseUrl = "https://etjnzvgjfzeebthozvyi.supabase.co",
-        supabaseKey = "sb_publishable_a6ScpW1-DMQfRwjg7oBUFg_Xmpw3e6J"
-    ) {
-        install(Auth)
-        install(Postgrest)
-    }
-}
-
 @Serializable
 data class Usuario(
     val id: String,
@@ -22,3 +12,16 @@ data class Usuario(
     val apellidos: String,
     val correo: String
 )
+object SupabaseClient {
+    val client = createSupabaseClient(
+        supabaseUrl = "https://etjnzvgjfzeebthozvyi.supabase.co",
+        supabaseKey = "sb_publishable_a6ScpW1-DMQfRwjg7oBUFg_Xmpw3e6J"
+    ) {
+        install(Auth){
+            scheme = "supabase"
+            host = "login-callback"
+        }
+        install(Postgrest)
+    }
+}
+

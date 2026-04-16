@@ -63,5 +63,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.biometric)
+    implementation(libs.androidx.biometric)
+    implementation(libs.google.play.services.auth)
 
 }
