@@ -5,6 +5,9 @@
     <string name="Tx_InicioS">La aventura está por iniciar, por favor inicia sesión</string>
     <string name="comienza">Comienza</string>
     <string name="registrate">Regístrate</string>
+    <string name="registro_titulo">REGISTRO</string>
+    <string name="repite_contrasena">Repite tu contraseña</string>
+    <string name="acepto_terminos">Acepto Términos y Condiciones</string>
     <string name="ingresar">Ingresar</string>
     <string name="recupera_contra">Recupera Tu Contraseña</string>
     <string name="no_tienes_cuenta">No tienes cuenta?</string>
@@ -18,8 +21,8 @@
 
     <string name="volver">Volver al Login</string>
     <string name="completa_datos">Completa tus datos para crear una cuenta.</string>
-    <string name="nombre">Nombre</string>
-    <string name="apellido">Apellido</string>
+    <string name="nombre">Nombres</string>
+    <string name="apellido">Apellidos</string>
     <string name="telefono">Teléfono</string>
     <string name="correo">Correo Electrónico</string>
     <string name="confirmar_correo">Confirmar Correo</string>
@@ -35,5 +38,10 @@
     <string name="carrito">Carrito</string>
     <string name="perfil">Perfil</string>
     <string name="precio">Precio</string>
+    <string name="guardar_cambios">Guardar Cambios</string>
+    <string name="confirma_nueva_contrase_a">Confirma nueva contraseña</string>
+    <string name="nueva_contrase_a">Nueva contraseña</string>
+    <string name="cambiar_contrase_a_opcional">Cambiar Contraseña (Opcional)</string>
+    <string name="mi_perfil">Mi Perfil</string>
 
 </resources>
