@@ -4,4 +4,8 @@
         <!-- Customize your light theme here. -->
         <item name="android:statusBarColor">@color/naranja_principal</item>
     </style>
+
+    <style name="CircleImage" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

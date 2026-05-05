@@ -12,6 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.taller2.R
 import com.example.taller2.ui.SupabaseClient
 import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.filter.PostgrestFilterBuilder
 import kotlinx.coroutines.launch
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -69,28 +71,60 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_favoritos -> replaceFragment(FavoritosFragment())
                 R.id.nav_admin -> replaceFragment(AdminFragment())
                 R.id.nav_usuarios -> replaceFragment(UsuariosFragment())
-                R.id.nav_salir -> {
-                    lifecycleScope.launch {
-                        try {
-                            SupabaseClient.client.auth.signOut()
-
-                            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-
-                            startActivity(intent)
-                            finish()
-                        } catch (e: Exception) {
-                            // Si falla el internet, al menos lo mandamos al Login
-                            startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                            finish()
-                        }
-                    }
-                }
+                R.id.nav_salir -> mostrarDialogoCerrarSesion()
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             true
         }
+
+        verificarRolUsuario(navView)
+    }
+
+    private fun verificarRolUsuario(navView: NavigationView) {
+        lifecycleScope.launch {
+            try {
+                val user = SupabaseClient.client.auth.currentUserOrNull()
+                if (user != null) {
+                    val usuarioBD = SupabaseClient.client.postgrest["Usuarios"]
+                        .select { filter { eq("id", user.id) } }
+                        .decodeSingle<com.example.taller2.ui.Usuario>()
+
+                    if (usuarioBD.rol != "admin") {
+                        navView.menu.findItem(R.id.nav_admin)?.isVisible = false
+                        navView.menu.findItem(R.id.nav_usuarios)?.isVisible = false
+                    }
+                }
+            } catch (e: Exception) {
+                // Si falla, por seguridad ocultamos las opciones de admin
+                navView.menu.findItem(R.id.nav_admin)?.isVisible = false
+                navView.menu.findItem(R.id.nav_usuarios)?.isVisible = false
+            }
         }
+    }
+
+    private fun mostrarDialogoCerrarSesion() {
+        android.app.AlertDialog.Builder(this)
+            .setTitle("Cerrar Sesión")
+            .setMessage("¿Estás seguro de que deseas salir?")
+            .setPositiveButton("Sí") { _, _ ->
+                cerrarSesion()
+            }
+            .setNegativeButton("No", null)
+            .show()
+    }
+
+    private fun cerrarSesion() {
+        lifecycleScope.launch {
+            try {
+                SupabaseClient.client.auth.signOut()
+            } catch (_: Exception) { }
+            
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+    }
 
     private fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
