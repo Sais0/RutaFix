@@ -46,4 +46,48 @@
     <string name="guardando">Guardando...</string>
     <string name="perfil_actualizado">¡Perfil actualizado con éxito!</string>
 
+    <!-- Diálogos y Mensajes -->
+    <string name="opcion_camara">Cámara</string>
+    <string name="opcion_galeria">Galería</string>
+    <string name="seleccionar_foto_perfil">Seleccionar foto de perfil</string>
+    <string name="permiso_camara_denegado">Permiso de cámara denegado</string>
+    <string name="permiso_camara_requerido">Se requiere el permiso para tomar fotos</string>
+    <string name="error_crear_archivo">Error al crear archivo de imagen</string>
+    <string name="error_cargar_datos">Error al cargar datos</string>
+    <string name="error_campos_vacios">Completa los campos obligatorios</string>
+    <string name="error_password_invalida">Contraseña inválida o no coinciden</string>
+    <string name="error_guardar">Error al guardar</string>
+    <string name="titulo_cerrar_sesion">Cerrar Sesión</string>
+    <string name="mensaje_cerrar_sesion">¿Estás seguro de que deseas salir?</string>
+    <string name="si">Sí</string>
+    <string name="no">No</string>
+    <string name="titulo_biometrico">Acceso Biométrico</string>
+    <string name="subtitulo_biometrico">Usa tu huella para entrar</string>
+    <string name="boton_biometrico_negativo">Usar clave</string>
+    <string name="error_biometrico_primera_vez">Primero debes ingresar con tu correo o Google una vez</string>
+    <string name="error_google_token">No se pudo obtener el token de Google</string>
+    <string name="error_google_general">Error al sincronizar cuenta</string>
+    <string name="terminos_requeridos">Debes aceptar los términos y condiciones</string>
+    <string name="registro_exitoso">¡Registro exitoso!</string>
+    <string name="error_registro">Error en el registro</string>
+    <string name="passwords_no_coinciden">Las contraseñas no coinciden</string>
+    <string name="cambiar_foto">Cambiar foto</string>
+    <string name="iniciar_con_huella">Iniciar con huella</string>
+    <string name="error_obtener_id">No se pudo obtener el ID del usuario</string>
+    <string name="default_nombres">Usuario</string>
+    <string name="default_apellidos">Google</string>
+    <string name="error_google_auth">Error Google</string>
+    <string name="log_iniciando_selector">Iniciando selector de cuentas de Google...</string>
+    <string name="error_datos_incorrectos">Datos incorrectos</string>
+    <string name="error_prefijo">Error: </string>
+    <string name="mime_type_image">image/*</string>
+    <string name="prefijo_perfil">perfil_</string>
+    <string name="ext_jpg">.jpg</string>
+    <string name="tabla_usuarios">Usuarios</string>
+    <string name="bucket_avatars">avatars</string>
+    <string name="formato_fecha_imagen">yyyyMMdd_HHmmss</string>
+    <string name="prefijo_archivo_imagen">JPEG_</string>
+    <string name="rol_admin">admin</string>
+    <string name="rol_usuario">usuario</string>
+
 </resources>

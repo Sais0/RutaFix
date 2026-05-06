@@ -21,7 +21,6 @@ import com.example.taller2.ui.SupabaseClient
 import com.example.taller2.ui.Usuario
 import com.example.taller2.ui.main.MainActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import io.github.jan.supabase.auth.auth
@@ -53,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                     loginWithSupabaseIDToken(idToken)
                 } else {
                     Log.w(TAG, "Google Sign-In exitoso pero el ID Token es NULO. Verifica la configuración en Google Cloud Console.")
-                    Toast.makeText(this, "No se pudo obtener el token de Google", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.error_google_token), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: ApiException) {
                 Log.e(TAG, "Error Google Sign-In. Código de estado: ${e.statusCode}. Mensaje: ${e.message}", e)
@@ -93,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
             if (correo.isNotEmpty() && pass.isNotEmpty()) {
                 loginEmail(correo, pass)
             } else {
-                Toast.makeText(this, "Por favor llena todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_campos_vacios), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -103,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
             if (sharedPref.getBoolean("ha_ingresado", false)) {
                 mostrarLectorHuella()
             } else {
-                Toast.makeText(this, "Primero debes ingresar con tu correo o Google una vez", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.error_biometrico_primera_vez), Toast.LENGTH_LONG).show()
             }
         }
 
@@ -125,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
                 irAlMain()
             } catch (e: Exception) {
                 Log.e(TAG, "Error en inicio de sesión con correo: ${e.message}", e)
-                Toast.makeText(this@LoginActivity, "Error: ${e.message ?: "Datos incorrectos"}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, getString(R.string.error_prefijo) + (e.message ?: getString(R.string.error_datos_incorrectos)), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -166,7 +165,7 @@ class LoginActivity : AppCompatActivity() {
                 irAlMain()
             } catch (e: Exception) {
                 Log.e(TAG, "Error vinculando con Supabase. Mensaje: ${e.message}", e)
-                Toast.makeText(this@LoginActivity, "Error al sincronizar cuenta: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "${getString(R.string.error_google_general)}: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -194,9 +193,9 @@ class LoginActivity : AppCompatActivity() {
             })
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Acceso Biométrico")
-            .setSubtitle("Usa tu huella para entrar")
-            .setNegativeButtonText("Usar clave")
+            .setTitle(getString(R.string.titulo_biometrico))
+            .setSubtitle(getString(R.string.subtitulo_biometrico))
+            .setNegativeButtonText(getString(R.string.boton_biometrico_negativo))
             .build()
 
         biometricPrompt.authenticate(promptInfo)
@@ -205,7 +204,7 @@ class LoginActivity : AppCompatActivity() {
     private suspend fun crearUsuarioSiNoExiste(user: UserInfo) {
         try {
             // Intentamos buscar si ya existe
-            val existe = SupabaseClient.client.postgrest["Usuarios"]
+            val existe = SupabaseClient.client.postgrest[getString(R.string.tabla_usuarios)]
                 .select {
                     filter { eq("id", user.id) }
                 }.data != "[]"
@@ -213,8 +212,8 @@ class LoginActivity : AppCompatActivity() {
             if (!existe) {
                 // Si no existe, lo creamos con datos de Google
                 val metadata = user.userMetadata
-                val fullNombre = metadata?.get("full_name")?.toString()?.split(" ") ?: listOf("Usuario", "Google")
-                val nombres = fullNombre.firstOrNull() ?: "Usuario"
+                val fullNombre = metadata?.get("full_name")?.toString()?.split(" ") ?: listOf(getString(R.string.default_nombres), getString(R.string.default_apellidos))
+                val nombres = fullNombre.firstOrNull() ?: getString(R.string.default_nombres)
                 val apellidos = if (fullNombre.size > 1) fullNombre.subList(1, fullNombre.size).joinToString(" ") else ""
                 
                 val nuevoUsuario = Usuario(
@@ -225,7 +224,7 @@ class LoginActivity : AppCompatActivity() {
                     foto_url = metadata?.get("avatar_url")?.toString()
                 )
                 
-                SupabaseClient.client.postgrest["Usuarios"].insert(nuevoUsuario)
+                SupabaseClient.client.postgrest[getString(R.string.tabla_usuarios)].insert(nuevoUsuario)
                 Log.d(TAG, "Nuevo usuario de Google creado en la tabla Usuarios")
             }
         } catch (e: Exception) {

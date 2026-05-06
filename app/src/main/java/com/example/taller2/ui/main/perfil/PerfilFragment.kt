@@ -75,7 +75,7 @@ class PerfilFragment : Fragment() {
         if (isGranted) {
             abrirCamara()
         } else {
-            Toast.makeText(requireContext(), "Permiso de cámara denegado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.permiso_camara_denegado), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -105,13 +105,13 @@ class PerfilFragment : Fragment() {
     }
 
     private fun mostrarOpcionesImagen() {
-        val opciones = arrayOf("Cámara", "Galería")
+        val opciones = arrayOf(getString(R.string.opcion_camara), getString(R.string.opcion_galeria))
         android.app.AlertDialog.Builder(requireContext())
-            .setTitle("Seleccionar foto de perfil")
+            .setTitle(getString(R.string.seleccionar_foto_perfil))
             .setItems(opciones) { _, which ->
                 when (which) {
                     0 -> checkCameraPermission()
-                    1 -> galleryLauncher.launch("image/*")
+                    1 -> galleryLauncher.launch(getString(R.string.mime_type_image))
                 }
             }
             .show()
@@ -123,7 +123,7 @@ class PerfilFragment : Fragment() {
                 abrirCamara()
             }
             shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
-                Toast.makeText(requireContext(), "Se requiere el permiso para tomar fotos", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), getString(R.string.permiso_camara_requerido), Toast.LENGTH_LONG).show()
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
             }
             else -> {
@@ -146,15 +146,15 @@ class PerfilFragment : Fragment() {
             }
             cameraLauncher.launch(intent)
         } catch (_: IOException) {
-            Toast.makeText(requireContext(), "Error al crear archivo de imagen", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.error_crear_archivo), Toast.LENGTH_SHORT).show()
         }
     }
 
     @Throws(IOException::class)
     private fun crearArchivoImagen(): File {
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+        val timeStamp: String = SimpleDateFormat(getString(R.string.formato_fecha_imagen), Locale.US).format(Date())
         val storageDir: File? = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("JPEG_${timeStamp}_", ".jpg", storageDir).apply {
+        return File.createTempFile(getString(R.string.prefijo_archivo_imagen) + timeStamp + "_", getString(R.string.ext_jpg), storageDir).apply {
             cameraImageFile = this
         }
     }
@@ -164,7 +164,7 @@ class PerfilFragment : Fragment() {
             try {
                 val user = SupabaseClient.client.auth.currentUserOrNull()
                 if (user != null) {
-                    val usuarioBD = SupabaseClient.client.postgrest["Usuarios"]
+                    val usuarioBD = SupabaseClient.client.postgrest[getString(R.string.tabla_usuarios)]
                         .select { filter { eq("id", user.id) } }
                         .decodeSingle<Usuario>()
 
@@ -184,7 +184,7 @@ class PerfilFragment : Fragment() {
                     }
                 }
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Error al cargar: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "${getString(R.string.error_cargar_datos)}: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -193,8 +193,8 @@ class PerfilFragment : Fragment() {
         return withContext(Dispatchers.IO) {
             try {
                 val user = SupabaseClient.client.auth.currentUserOrNull() ?: return@withContext null
-                val fileName = "perfil_${user.id}.jpg" // Sobrescribir para ahorrar espacio
-                val bucket = SupabaseClient.client.storage.from("avatars")
+                val fileName = "${getString(R.string.prefijo_perfil)}${user.id}${getString(R.string.ext_jpg)}" // Sobrescribir para ahorrar espacio
+                val bucket = SupabaseClient.client.storage.from(getString(R.string.bucket_avatars))
 
                 val inputStream = requireContext().contentResolver.openInputStream(uri)
                 val bytes = inputStream?.readBytes() ?: return@withContext null
@@ -217,7 +217,7 @@ class PerfilFragment : Fragment() {
         val reNuevaPass = etConfirmarPassword.text.toString()
 
         if (nuevoNombre.isEmpty() || nuevoApellido.isEmpty()) {
-            Toast.makeText(requireContext(), "Completa los campos obligatorios", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.error_campos_vacios), Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -243,7 +243,7 @@ class PerfilFragment : Fragment() {
                     foto_url = urlFinal
                 )
 
-                SupabaseClient.client.postgrest["Usuarios"].update(usuarioActualizado) {
+                SupabaseClient.client.postgrest[getString(R.string.tabla_usuarios)].update(usuarioActualizado) {
                     filter { eq("id", user.id) }
                 }
 
@@ -253,14 +253,14 @@ class PerfilFragment : Fragment() {
                         etPassword.text.clear()
                         etConfirmarPassword.text.clear()
                     } else {
-                        Toast.makeText(requireContext(), "Contraseña inválida o no coinciden", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(R.string.error_password_invalida), Toast.LENGTH_SHORT).show()
                     }
                 }
                 
                 Toast.makeText(requireContext(), getString(R.string.perfil_actualizado), Toast.LENGTH_SHORT).show()
 
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Error al guardar: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "${getString(R.string.error_guardar)}: ${e.message}", Toast.LENGTH_LONG).show()
             } finally {
                 btnGuardar.isEnabled = true
                 btnGuardar.text = getString(R.string.guardar_cambios)

@@ -46,17 +46,17 @@ class RegisterActivity : AppCompatActivity() {
             val confirmPassword = etConfirmarPassword.text.toString()
 
             if (nombre.isEmpty() || apellido.isEmpty() || correo.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Completa todos los campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.error_campos_vacios), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (password != confirmPassword) {
-                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.passwords_no_coinciden), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (!cbTerminos.isChecked) {
-                Toast.makeText(this, "Debes aceptar los términos y condiciones", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.terminos_requeridos), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -77,7 +77,7 @@ class RegisterActivity : AppCompatActivity() {
                 // B. Obtener el ID del usuario creado (Nota: en versiones recientes de Supabase-kt puede variar el acceso)
                 // Usamos la sesión si el registro fue exitoso
                 val userId = SupabaseClient.client.auth.currentUserOrNull()?.id 
-                    ?: throw Exception("No se pudo obtener el ID del usuario")
+                    ?: throw Exception(getString(R.string.error_obtener_id))
 
                 // C. Insertar datos adicionales en la tabla "Usuarios" (coincidiendo con tu Supabase)
                 val nuevoUsuario = Usuario(
@@ -87,9 +87,9 @@ class RegisterActivity : AppCompatActivity() {
                     correo = correo
                 )
 
-                SupabaseClient.client.postgrest["Usuarios"].insert(nuevoUsuario)
+                SupabaseClient.client.postgrest[getString(R.string.tabla_usuarios)].insert(nuevoUsuario)
 
-                Toast.makeText(this@RegisterActivity, "¡Registro exitoso!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@RegisterActivity, getString(R.string.registro_exitoso), Toast.LENGTH_SHORT).show()
                 
                 // Volver al Login
                 val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
@@ -97,7 +97,7 @@ class RegisterActivity : AppCompatActivity() {
                 finish()
 
             } catch (e: Exception) {
-                Toast.makeText(this@RegisterActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@RegisterActivity, "${getString(R.string.error_registro)}: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
     }

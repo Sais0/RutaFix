@@ -85,11 +85,11 @@ class MainActivity : AppCompatActivity() {
             try {
                 val user = SupabaseClient.client.auth.currentUserOrNull()
                 if (user != null) {
-                    val usuarioBD = SupabaseClient.client.postgrest["Usuarios"]
+                    val usuarioBD = SupabaseClient.client.postgrest[getString(R.string.tabla_usuarios)]
                         .select { filter { eq("id", user.id) } }
                         .decodeSingle<com.example.taller2.ui.Usuario>()
 
-                    if (usuarioBD.rol != "admin") {
+                    if (usuarioBD.rol != getString(R.string.rol_admin)) {
                         navView.menu.findItem(R.id.nav_admin)?.isVisible = false
                         navView.menu.findItem(R.id.nav_usuarios)?.isVisible = false
                     }
@@ -104,12 +104,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun mostrarDialogoCerrarSesion() {
         android.app.AlertDialog.Builder(this)
-            .setTitle("Cerrar Sesión")
-            .setMessage("¿Estás seguro de que deseas salir?")
-            .setPositiveButton("Sí") { _, _ ->
+            .setTitle(getString(R.string.titulo_cerrar_sesion))
+            .setMessage(getString(R.string.mensaje_cerrar_sesion))
+            .setPositiveButton(getString(R.string.si)) { _, _ ->
                 cerrarSesion()
             }
-            .setNegativeButton("No", null)
+            .setNegativeButton(getString(R.string.no), null)
             .show()
     }
 
